@@ -1,0 +1,92 @@
+{
+	"info": {
+		"_postman_id": "0f99c65a-cad0-4c7d-8be9-3bec8cab47db",
+		"name": "api_tag",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET all api selection data",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/api_tagging-micro/apitags/v1/apis",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api_tagging-micro",
+						"apitags",
+						"v1",
+						"apis"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET single api tags",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8080/api_tagging-micro/apitags/v1/apis/hackathon-test1/versions/v1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api_tagging-micro",
+						"apitags",
+						"v1",
+						"apis",
+						"hackathon-test1",
+						"versions",
+						"v1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT update single api tags",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tags\": [\"hackaton\", \"test1\", \"Team<T>\"]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api_tagging-micro/apitags/v1/apis/hackathon-test1/versions/v1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api_tagging-micro",
+						"apitags",
+						"v1",
+						"apis",
+						"hackathon-test1",
+						"versions",
+						"v1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

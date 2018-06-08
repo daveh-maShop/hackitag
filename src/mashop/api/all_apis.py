@@ -8,7 +8,7 @@ from mashop.microtoolkit.toolkit import handle_exception
 
 def get_cookie_headers():
     url = 'http://devapi2.shop.com/amp/portal/login'
-    body = json.dumps({'username': 'maeagle\\daveh', 'password': 'Evrdy_Bun2y'})
+    body = json.dumps({'username': 'java-gso', 'password': 'changeme'})
     header = {'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest'}
     try:
         r = requests.post(url, headers=header, data=body, timeout=10)
