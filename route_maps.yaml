@@ -1,0 +1,11 @@
+routes:
+    - route: 'apitags/v1/apis'
+      module_map:
+        GET:
+          module_name: 'mashop.api.all_apis'
+    - route: 'apitags/v1/apis/{api_name}/versions/{api_version}'
+      module_map:
+        GET:
+          module_name: 'mashop.api.single_api'
+        PUT:
+          module_name: 'mashop.api.single_api'

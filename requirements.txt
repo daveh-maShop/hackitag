@@ -1,0 +1,2 @@
+msa-microtoolkit==1.0.0rc2.dev7
+requests
