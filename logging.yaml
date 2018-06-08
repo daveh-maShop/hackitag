@@ -1,0 +1,94 @@
+version: 1
+formatters:
+  standard:
+    format: '%(asctime)s [%(thread)d] %(name)s - %(levelname)s - %(message)s'
+  kafka:
+    format: '{"version": "1.0", "log_type": "%(name)s", "app_type": "microtoolkit", "app_name": "${APP_NAME}", %(message)s}'
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: DEBUG
+    formatter: standard
+    stream: ext://sys.stdout
+  console_kafka:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: kafka
+    stream: ext://sys.stdout
+  file:
+    class: mashop.logging.handler.MakeFileHandler
+    level: DEBUG
+    formatter: standard
+    filename: ${APP_HOME}/logs/${APP_NAME}-${HOSTNAME}.log
+  file_metrics:
+    class: mashop.logging.handler.MakeFileHandler
+    level: INFO
+    formatter: kafka
+    filename: ${APP_HOME}/logs/metrics/${APP_NAME}-metrics-${HOSTNAME}.log
+    filtered_routes: [/heartbeat]
+  file_transactions:
+    class: mashop.logging.handler.MakeFileHandler
+    level: INFO
+    formatter: kafka
+    filename: ${APP_HOME}/logs/${APP_NAME}-transactions-${HOSTNAME}.log
+  file_alerts:
+    class: mashop.logging.handler.MakeFileHandler
+    level: INFO
+    formatter: kafka
+    filename: ${APP_HOME}/logs/${APP_NAME}-alerts-${HOSTNAME}.log
+  kafka_metrics:
+    class: mashop.logging.handler.KafkaFilteredLoggingHandler
+    level: INFO
+    formatter: kafka
+    filtered_routes: [/heartbeat]
+    topic: ${KAFKA_METRICS_TOPIC}
+    hosts: ${KAFKA_METRICS_HOSTS}
+  kafka_transactions:
+    class: mashop.logging.handler.KafkaLoggingHandler
+    level: INFO
+    formatter: kafka
+    topic: ${KAFKA_TRANSACTIONS_TOPIC}
+    hosts: ${KAFKA_TRANSACTIONS_HOSTS}
+  kafka_alerts:
+    class: mashop.logging.handler.KafkaLoggingHandler
+    level: INFO
+    formatter: kafka
+    topic: ${KAFKA_ALERTS_TOPIC}
+    hosts: ${KAFKA_ALERTS_HOSTS}
+  email:
+    class: mashop.logging.handler.EnvSMTPHandler
+    level: ERROR
+    formatter: standard
+    mailhost: dagmail.maeagle.corp
+    fromaddr: pythonapi@marketamerica.com
+    toaddrs: couch-pytato@marketamerica.com
+    subject: ${APP_NAME} API Error
+loggers:
+  # module
+  __main__:
+    level: INFO
+    handlers: [console, file]
+    propagate: no
+  mashop.microtoolkit:
+    level: INFO
+    handlers: [console, file]  # email, 
+    propagate: no
+  # manually named
+  alert:
+    level: INFO
+    handlers: [console_kafka, file_alerts, kafka_alerts]
+  metrics:
+    level: INFO
+    handlers: [console_kafka, file_metrics, kafka_metrics]
+    propagate: no
+  rest_logger:
+    level: INFO
+    handlers: [console, file]
+    propagate: no
+  transaction:
+    level: INFO
+    handlers: [console_kafka, file_transactions, kafka_transactions]
+    propagate: no
+root:
+  level: INFO
+  handlers: [console, file]
